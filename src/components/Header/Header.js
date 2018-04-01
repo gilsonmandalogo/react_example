@@ -11,7 +11,7 @@ export class Header extends Component {
           <br/>
           <ButtonGroup>
             <Button onClick={() => this.props.history.push('/')} disabled={this.props.location.pathname === '/'} >Home</Button>
-            <Button onClick={() => this.props.history.push('/showcase')} disabled={this.props.location.pathname === '/showcase'} >Showcase</Button>
+            <Button onClick={() => this.props.history.push('/showcase/0')} disabled={this.props.match.path === '/showcase/:page'} >Showcase</Button>
             <Button onClick={() => this.props.history.push('/about')} disabled={this.props.location.pathname === '/about'} >About me</Button>
           </ButtonGroup>
         </header>

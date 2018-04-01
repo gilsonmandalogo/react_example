@@ -7,47 +7,34 @@ import { Link } from "react-router-dom";
 import no_thumb from './no_thumb.svg';
 
 export default class Showcase extends Component {
+  _initState = {
+    loading: true,
+    data: null,
+  }
+
   constructor(props) {
     super(props);
     
-    this.state = {
-      loading: true,
-      data: null,
-    };
+    this.state = this._initState;
   }
 
   previousPageLink = () => {
-    let page = '';
-
-    if (this.props.match.params.page) {
-      page = this.props.match.params.page - 1;
-    };
-
-    this.props.history.push('/showcase/' + page);
+    this.props.history.push('/showcase/' + (parseInt(this.props.match.params.page, 0) - 1));
+    this.setState(this._initState);
   }
 
   nextPageLink = () => {
-    let page = '';
-
-    if (this.props.match.params.page) {
-      page = this.props.match.params.page + 1;
-    };
-
-    this.props.history.push('/showcase/' + page);
+    this.props.history.push('/showcase/' + (parseInt(this.props.match.params.page, 0) + 1));
+    this.setState(this._initState);
   }
 
   goPageLink = page => {
-    this.props.history.push('/showcase/' + page)
+    this.props.history.push('/showcase/' + page);
+    this.setState(this._initState);
   }
 
   loadVideos = () => {
-    let query = '';
-
-    if (this.props.match.params.page) {
-      query = '?page=' + this.props.match.params.page;
-    };
-
-    fetch('http://localhost/api/video' + query)
+    fetch('http://localhost/api/video?page=' + this.props.match.params.page)
     .then(res => {
       res.json().then(data => this.setState({ loading: false, data }));
     });
@@ -90,9 +77,9 @@ export default class Showcase extends Component {
   }
 
   renderPagination = () => {
-    const pages = [];
+    const pages = [];    
 
-    for (let index = 0; index < Math.floor(this.state.data.count / 9) +1; index++) {      
+    for (let index = 0; index < Math.floor(this.state.data.count / 9) +1; index++) {
       pages.push(
         <PaginationItem active={this.state.data.page === index} key={index} >
           <PaginationLink onClick={() => this.goPageLink(index)} >{index +1}</PaginationLink>

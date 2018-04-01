@@ -15,7 +15,6 @@ export default class App extends Component {
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/about" component={About} />
-          <Route path="/showcase" component={Showcase} />
           <Route path="/showcase/:page" component={Showcase} />
           <Route path="/watch/:id" component={Watch} />
           <Route path="/upload" component={Upload} />
